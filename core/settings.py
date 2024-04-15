@@ -18,7 +18,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 WEBSITE_URL = os.environ.get('WEBSITE_URL')
 
-DJNAGO_APPS = [
+DJANGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -38,7 +38,7 @@ LOCAL_APPS = [
 ]
 
 
-INSTALLED_APPS = DJNAGO_APPS + EXTERNAL_APPS + LOCAL_APPS
+INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
