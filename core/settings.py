@@ -16,6 +16,7 @@ from .cdn.conf import (
     STATICFILES_STORAGE,
 )
 
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 load_dotenv()
@@ -29,7 +30,7 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS').split(',')
 
 WEBSITE_URL = os.environ.get('WEBSITE_URL')
 
-DJANGO_APPS = [
+DJNAGO_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -49,7 +50,7 @@ LOCAL_APPS = [
 ]
 
 
-INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + LOCAL_APPS
+INSTALLED_APPS = DJNAGO_APPS + EXTERNAL_APPS + LOCAL_APPS
 
 
 MIDDLEWARE = [
@@ -153,7 +154,7 @@ USE_TZ = True
 # MEDIA_URL = "/media/"
 
 
-AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID 
+AWS_ACCESS_KEY_ID = AWS_ACCESS_KEY_ID
 AWS_SECRET_ACCESS_KEY = AWS_SECRET_ACCESS_KEY
 AWS_STORAGE_BUCKET_NAME = AWS_STORAGE_BUCKET_NAME
 AWS_S3_ENDPOINT_URL = AWS_ENDPOINT_URL
@@ -161,14 +162,14 @@ AWS_S3_OBJECT_PARAMETERS = AWS_S3_OBJECT_PARAMETERS
 AWS_LOCATION = AWS_STORAGE_BUCKET_NAME
 AWS_QUERYSTRING_EXPIRE = 5
 
-STATIC_URL = 'https://%s/%s/' %(AWS_ENDPOINT, AWS_LOCATION)
-MEDIA_URL = 'https://%s/%s/' %(AWS_ENDPOINT, AWS_LOCATION)
+STATIC_URL = 'https://%s/%s/' % (AWS_ENDPOINT, AWS_LOCATION)
+MEDIA_URL = 'https://%s/%s/' % (AWS_ENDPOINT, AWS_LOCATION)
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'static'),
 ]
 MEDIAFILES_DIRS = [
-    os.path.join(BASE_DIR, 'media')
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 STATICFILES_STORAGE = STATICFILES_STORAGE
