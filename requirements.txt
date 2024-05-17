@@ -7,5 +7,5 @@ dj-database-url
 gunicorn
 django-storages
 boto3
-psycopg==3.1.9
-psycopg2-binary==2.9.6
+psycopg
+psycopg2-binary
