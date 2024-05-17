@@ -1,7 +1,6 @@
 from django.urls import path
 from user import views
 
-
 app_name = 'user'
 
 urlpatterns = [
@@ -11,5 +10,4 @@ urlpatterns = [
     path('profile/<uuid:id>/', views.profile, name="profile"),
     path('follow/<uuid:id>/', views.follow, name="follow"),
     path('followers/<uuid:id>/', views.follow_info, name="follow_info"),
-    path('logout/', views.user_logout, name="user_logout"),
-]
+] 

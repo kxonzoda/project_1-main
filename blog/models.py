@@ -1,5 +1,6 @@
 from django.db import models
 from user.models import User
+from django.contrib.auth import get_user_model
 
 
 class Category(models.Model):
@@ -12,7 +13,7 @@ class Category(models.Model):
 # CASCADE ---> Category (Technology) <--> Post (Yangilik 1) post ham o'chib ketadi
 # SET_NULL ---> Category (Technology) <--> Post (Yangilik 1) post categorysi bo'sh bo'adi
 
-# request.user ===> Abdulaziz
+# request.user ===> Xonzoda
 # user.post_author.all()
 
 # technology ===> technology.post_category.all()
@@ -36,6 +37,7 @@ class Post(models.Model):
     audio = models.FileField(upload_to='audios/', blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+    likes = models.ManyToManyField(get_user_model(), through='Like', related_name='liked_posts')
 
     def __str__(self) -> str:
         return f"{self.category} - {self.name}"
@@ -69,7 +71,16 @@ class Comment(models.Model):
 
     def __str__(self) -> str:
         return f"{self.body} - {self.parent}"
+    
 
+class Like(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    post = models.ForeignKey('Post', on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'post')  
+        
 
 class Trend(models.Model):
     hashtag = models.CharField(max_length=255)

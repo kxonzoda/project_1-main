@@ -1,410 +1,498 @@
 <!DOCTYPE html>
 {% load static %}
 <html lang="en">
+    <head>
+        <title>Blogzine</title>
 
-<head>
-    <title>Blogzine - Blog and Magazine Bootstrap 5 Theme</title>
+        <!-- Meta Tags -->
+        <meta charset="utf-8">
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="author" content="Webestica.com">
+        <meta name="description"
+            content="Bootstrap based News, Magazine and Blog Theme">
 
-    <!-- Meta Tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="author" content="Webestica.com">
-    <meta name="description" content="Bootstrap based News, Magazine and Blog Theme">
+        <!-- Dark mode -->
+        <script>
+		const storedTheme = localStorage.getItem('theme')
+ 
+		const getPreferredTheme = () => {
+			if (storedTheme) {
+				return storedTheme
+			}
+			return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'light'
+		}
 
-    <!-- Dark mode -->
-    <script>
-        const storedTheme = localStorage.getItem('theme')
+		const setTheme = function (theme) {
+			if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+				document.documentElement.setAttribute('data-bs-theme', 'dark')
+			} else {
+				document.documentElement.setAttribute('data-bs-theme', theme)
+			}
+		}
 
-        const getPreferredTheme = () => {
-            if (storedTheme) {
-                return storedTheme
-            }
-            return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'light'
-        }
+		setTheme(getPreferredTheme())
 
-        const setTheme = function (theme) {
-            if (theme === 'auto' && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                document.documentElement.setAttribute('data-bs-theme', 'dark')
-            } else {
-                document.documentElement.setAttribute('data-bs-theme', theme)
-            }
-        }
+		window.addEventListener('DOMContentLoaded', () => {
+		    var el = document.querySelector('.theme-icon-active');
+			if(el != 'undefined' && el != null) {
+				const showActiveTheme = theme => {
+				const activeThemeIcon = document.querySelector('.theme-icon-active use')
+				const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
+				const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
 
-        setTheme(getPreferredTheme())
+				document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
+					element.classList.remove('active')
+				})
 
-        window.addEventListener('DOMContentLoaded', () => {
-            var el = document.querySelector('.theme-icon-active');
-            if (el != 'undefined' && el != null) {
-                const showActiveTheme = theme => {
-                    const activeThemeIcon = document.querySelector('.theme-icon-active use')
-                    const btnToActive = document.querySelector(`[data-bs-theme-value="${theme}"]`)
-                    const svgOfActiveBtn = btnToActive.querySelector('.mode-switch use').getAttribute('href')
+				btnToActive.classList.add('active')
+				activeThemeIcon.setAttribute('href', svgOfActiveBtn)
+			}
 
-                    document.querySelectorAll('[data-bs-theme-value]').forEach(element => {
-                        element.classList.remove('active')
-                    })
+			window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
+				if (storedTheme !== 'light' || storedTheme !== 'dark') {
+					setTheme(getPreferredTheme())
+				}
+			})
 
-                    btnToActive.classList.add('active')
-                    activeThemeIcon.setAttribute('href', svgOfActiveBtn)
-                }
+			showActiveTheme(getPreferredTheme())
 
-                window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', () => {
-                    if (storedTheme !== 'light' || storedTheme !== 'dark') {
-                        setTheme(getPreferredTheme())
-                    }
-                })
+			document.querySelectorAll('[data-bs-theme-value]')
+				.forEach(toggle => {
+					toggle.addEventListener('click', () => {
+						const theme = toggle.getAttribute('data-bs-theme-value')
+						localStorage.setItem('theme', theme)
+						setTheme(theme)
+						showActiveTheme(theme)
+					})
+				})
 
-                showActiveTheme(getPreferredTheme())
+			}
+		})
+		
+	</script>
 
-                document.querySelectorAll('[data-bs-theme-value]')
-                    .forEach(toggle => {
-                        toggle.addEventListener('click', () => {
-                            const theme = toggle.getAttribute('data-bs-theme-value')
-                            localStorage.setItem('theme', theme)
-                            setTheme(theme)
-                            showActiveTheme(theme)
-                        })
-                    })
+        <!-- Favicon -->
 
-            }
-        })
+        <link rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+        <link rel="shortcut icon"
+            href="{% static 'assets/images/favicon.ico' %}">
 
-    </script>
+        <!-- Google Font -->
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link
+            href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Rubik:wght@400;500;700&display=swap"
+            rel="stylesheet">
 
+        <!-- Plugins CSS -->
+        <link rel="stylesheet" type="text/css"
+            href="{% static 'assets/vendor/font-awesome/css/all.min.css' %}">
+        <link rel="stylesheet" type="text/css"
+            href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}">
+        <link rel="stylesheet" type="text/css"
+            href="{% static 'assets/vendor/tiny-slider/tiny-slider.css' %}">
+        <link rel="stylesheet" type="text/css"
+            href="{% static 'assets/vendor/plyr/plyr.css' %}">
 
-    <link rel="shortcut icon" href="assets/images/favicon.ico">
+        <!-- Theme CSS -->
+        <link rel="stylesheet" type="text/css"
+            href="{% static 'assets/css/style.css' %}">
 
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async
+            src="https://www.googletagmanager.com/gtag/js?id=G-XZ4W34ZJ0L"></script>
+        <script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&family=Rubik:wght@400;500;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+		gtag('config', 'G-XZ4W34ZJ0L');
+	</script>
+    </head>
 
+    <body>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/font-awesome/css/all.min.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/bootstrap-icons/bootstrap-icons.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/tiny-slider/tiny-slider.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/vendor/plyr/plyr.css' %}">
+        <header class="navbar-light navbar-sticky header-static">
+            <div class="navbar-top small">
+                <div class="container">
+                    <div
+                        class="d-md-flex justify-content-between align-items-center my-2">
+                        {% if not request.user.is_authenticated %}
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{% url 'user:sign_in' %}">Kirish /
+                                    Ro'yxatdan o'tish</a>
+                            </li>
+                        </ul>
+                        {% else %}
+                        <ul class="nav">
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{% url 'blog:user_logout' %}">Chiqish</a>
+                            </li>
+                        </ul>
+                        {% endif %}
+                        <!-- Top bar right -->
+                        <div class="d-flex align-items-center">
+                            <!-- Font size accessibility START -->
+                            <div class="btn-group me-3" role="group"
+                                aria-label="font size changer">
+                                <input type="radio" class="btn-check"
+                                    name="fntradio" id="font-sm">
+                                <label
+                                    class="btn btn-xs btn-outline-primary mb-0"
+                                    for="font-sm">A-</label>
 
+                                <input type="radio" class="btn-check"
+                                    name="fntradio" id="font-default" checked>
+                                <label
+                                    class="btn btn-xs btn-outline-primary mb-0"
+                                    for="font-default">A</label>
 
-    <link rel="stylesheet" type="text/css" href="{% static 'assets/css/style.css' %}">
+                                <input type="radio" class="btn-check"
+                                    name="fntradio" id="font-lg">
+                                <label
+                                    class="btn btn-xs btn-outline-primary mb-0"
+                                    for="font-lg">A+</label>
+                            </div>
 
+                            <!-- Dark mode options START -->
+                            <div class="nav-item dropdown mx-2">
+                                <!-- Switch button -->
+                                <button class="modeswitch" id="bd-theme"
+                                    type="button" aria-expanded="false"
+                                    data-bs-toggle="dropdown"
+                                    data-bs-display="static">
+                                    <svg class="theme-icon-active"><use
+                                            href="#"></use></svg>
+                                </button>
+                                <!-- Dropdown items -->
+                                <ul
+                                    class="dropdown-menu min-w-auto dropdown-menu-end"
+                                    aria-labelledby="bd-theme">
+                                    <li class="mb-1">
+                                        <button type="button"
+                                            class="dropdown-item d-flex align-items-center"
+                                            data-bs-theme-value="light">
+                                            <svg width="16" height="16"
+                                                fill="currentColor"
+                                                class="bi bi-brightness-high-fill fa-fw mode-switch me-1"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
+                                                <use href="#"></use>
+                                            </svg>Light
+                                        </button>
+                                    </li>
+                                    <li class="mb-1">
+                                        <button type="button"
+                                            class="dropdown-item d-flex align-items-center"
+                                            data-bs-theme-value="dark">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16" height="16"
+                                                fill="currentColor"
+                                                class="bi bi-moon-stars-fill fa-fw mode-switch me-1"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
+                                                <path
+                                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
+                                                <use href="#"></use>
+                                            </svg>Dark
+                                        </button>
+                                    </li>
+                                    <li>
+                                        <button type="button"
+                                            class="dropdown-item d-flex align-items-center active"
+                                            data-bs-theme-value="auto">
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="16" height="16"
+                                                fill="currentColor"
+                                                class="bi bi-circle-half fa-fw mode-switch me-1"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
+                                                <use href="#"></use>
+                                            </svg>Auto
+                                        </button>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- Dark mode options END -->
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XZ4W34ZJ0L"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() { dataLayer.push(arguments); }
-        gtag('js', new Date());
-
-        gtag('config', 'G-XZ4W34ZJ0L');
-    </script>
-</head>
-
-<body>
-
-    <header class="navbar-light navbar-sticky header-static">
-        <div class="navbar-top small">
-            <div class="container">
-                <div class="d-md-flex justify-content-between align-items-center my-2">
-                    {% if not request.user.is_authenticated %}
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user:sign_in' %}">Kirish / Ro'yxatdan o'tish</a>
-                        </li>
-                    </ul>
-                    {% else %}
-                    <ul class="nav">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user:user_logout' %}">Chiqish</a>
-                        </li>
-                    </ul>
-                    {% endif %}
-                    <!-- Top bar right -->
-                    <div class="d-flex align-items-center">
-                        <!-- Font size accessibility START -->
-                        <div class="btn-group me-3" role="group" aria-label="font size changer">
-                            <input type="radio" class="btn-check" name="fntradio" id="font-sm">
-                            <label class="btn btn-xs btn-outline-primary mb-0" for="font-sm">A-</label>
-
-                            <input type="radio" class="btn-check" name="fntradio" id="font-default" checked>
-                            <label class="btn btn-xs btn-outline-primary mb-0" for="font-default">A</label>
-
-                            <input type="radio" class="btn-check" name="fntradio" id="font-lg">
-                            <label class="btn btn-xs btn-outline-primary mb-0" for="font-lg">A+</label>
-                        </div>
-
-                        <!-- Dark mode options START -->
-                        <div class="nav-item dropdown mx-2">
-                            <!-- Switch button -->
-                            <button class="modeswitch" id="bd-theme" type="button" aria-expanded="false"
-                                data-bs-toggle="dropdown" data-bs-display="static">
-                                <svg class="theme-icon-active">
-                                    <use href="#"></use>
-                                </svg>
-                            </button>
-                            <!-- Dropdown items -->
-                            <ul class="dropdown-menu min-w-auto dropdown-menu-end" aria-labelledby="bd-theme">
-                                <li class="mb-1">
-                                    <button type="button" class="dropdown-item d-flex align-items-center"
-                                        data-bs-theme-value="light">
-                                        <svg width="16" height="16" fill="currentColor"
-                                            class="bi bi-brightness-high-fill fa-fw mode-switch me-1"
-                                            viewBox="0 0 16 16">
-                                            <path
-                                                d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z" />
-                                            <use href="#"></use>
-                                        </svg>Light
-                                    </button>
+                            <ul class="nav">
+                                <li class="nav-item">
+                                    <a class="nav-link px-2 fs-5" href="#"><i
+                                            class="fab fa-facebook-square"></i></a>
                                 </li>
-                                <li class="mb-1">
-                                    <button type="button" class="dropdown-item d-flex align-items-center"
-                                        data-bs-theme-value="dark">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-moon-stars-fill fa-fw mode-switch me-1"
-                                            viewBox="0 0 16 16">
-                                            <path
-                                                d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z" />
-                                            <path
-                                                d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z" />
-                                            <use href="#"></use>
-                                        </svg>Dark
-                                    </button>
+                                <li class="nav-item">
+                                    <a class="nav-link px-2 fs-5" href="#"><i
+                                            class="fab fa-twitter-square"></i></a>
                                 </li>
-                                <li>
-                                    <button type="button" class="dropdown-item d-flex align-items-center active"
-                                        data-bs-theme-value="auto">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-circle-half fa-fw mode-switch me-1"
-                                            viewBox="0 0 16 16">
-                                            <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z" />
-                                            <use href="#"></use>
-                                        </svg>Auto
-                                    </button>
+                                <li class="nav-item">
+                                    <a class="nav-link px-2 fs-5" href="#"><i
+                                            class="fab fa-linkedin"></i></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link px-2 fs-5" href="#"><i
+                                            class="fab fa-youtube-square"></i></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link ps-2 pe-0 fs-5"
+                                        href="#"><i
+                                            class="fab fa-vimeo"></i></a>
                                 </li>
                             </ul>
                         </div>
-                        <!-- Dark mode options END -->
-
-                        <ul class="nav">
-                            <li class="nav-item">
-                                <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-facebook-square"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-twitter-square"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-linkedin"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link px-2 fs-5" href="#"><i class="fab fa-youtube-square"></i></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link ps-2 pe-0 fs-5" href="#"><i class="fab fa-vimeo"></i></a>
-                            </li>
-                        </ul>
                     </div>
+                    <!-- Divider -->
+                    <div
+                        class="border-bottom border-2 border-primary opacity-1"></div>
                 </div>
-                <!-- Divider -->
-                <div class="border-bottom border-2 border-primary opacity-1"></div>
             </div>
-        </div>
 
+            <!-- Logo Nav START -->
+            <nav class="navbar navbar-expand-lg">
+                <div class="container">
+                    <!-- Logo START -->
+                    <a class="navbar-brand" href="{% url 'blog:home' %}">
+                        <img class="navbar-brand-item light-mode-item"
+                            src="{% static 'assets/images/logo.svg' %}"
+                            alt="logo">
+                        <img class="navbar-brand-item dark-mode-item"
+                            src="{% static 'assets/images/logo-light.svg' %}"
+                            alt="logo">
+                    </a>
+                    <!-- Logo END -->
 
-        <nav class="navbar navbar-expand-lg">
-            <div class="container">
-                <!-- Logo START -->
-                <a class="navbar-brand" href="/">
-                    <img class="navbar-brand-item light-mode-item" src="{% static 'assets/images/logo.svg' %}"
-                        alt="logo">
-                    <img class="navbar-brand-item dark-mode-item" src="{% static 'assets/images/logo-light.svg' %}"
-                        alt="logo">
-                </a>
-                <!-- Logo END -->
+                    <!-- Responsive navbar toggler -->
+                    <button class="navbar-toggler ms-auto" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarCollapse"
+                        aria-controls="navbarCollapse" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span
+                            class="text-body h6 d-none d-sm-inline-block">Menu</span>
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
 
-                <!-- Responsive navbar toggler -->
-                <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse"
-                    data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false"
-                    aria-label="Toggle navigation">
-                    <span class="text-body h6 d-none d-sm-inline-block">Menu</span>
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+                    <!-- Main navbar START -->
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <ul class="navbar-nav navbar-nav-scroll mx-auto">
 
-                <!-- Main navbar START -->
-                <div class="collapse navbar-collapse" id="navbarCollapse">
-                    <ul class="navbar-nav navbar-nav-scroll mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                    href="{% url 'blog:home' %}">Home</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'blog:home' %}">
-                                Home
-                            </a>
-                        </li>
-
-                        {% if request.user.is_superuser %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{% url 'user:dashboard' request.user.id %}">
-                                Dashboard
-                            </a>
-                        </li>
-                        {% endif %}
-                    </ul>
-                </div>
-
-
-                <div class="nav flex-nowrap align-items-center">
-                    {% if request.user.is_authenticated %}
-                    <div class="nav-item ms-2 ms-md-3 dropdown">
-                        <a class="avatar avatar-sm p-0" href="#" id="profileDropdown" role="button"
-                            data-bs-auto-close="outside" data-bs-display="static" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            {% if request.user.avatar %}
-                            <img class="avatar-img rounded-circle" src="{{ request.user.avatar.url }}" alt="avatar">
-                            {% else %}
-                            <img class="avatar-img rounded-circle"
-                                src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
-                                alt="avatar">
+                            {% if request.user.is_superuser %}
+                            <li class="nav-item"> <a class="nav-link"
+                                    href="{% url 'user:dashboard' request.user.id %}">Dashboard</a></li>
                             {% endif %}
-                        </a>
-
-                        <ul class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
-                            aria-labelledby="profileDropdown">
-                            <!-- Profile info -->
-                            <li class="px-3">
-                                <div class="d-flex align-items-center">
-                                    <!-- Avatar -->
-                                    <div class="avatar me-3">
-                                        {% if request.user.avatar %}
-                                        <img class="avatar-img rounded-circle shadow"
-                                            src="{{ request.user.avatar.url }}" alt="avatar">
-                                        {% else %}
-                                        <img class="avatar-img rounded-circle shadow"
-                                            src="https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o="
-                                            alt="avatar">
-                                        {% endif %}
-                                    </div>
-                                    <div>
-                                        <a class="h6 mt-2 mt-sm-0" href="#"> {{ request.user.full_name }}</a>
-                                        <p class="small m-0">+998{{ request.user.phone }}</p>
-                                    </div>
-                                </div>
-                                <hr>
-                            </li>
-                            <!-- Links -->
-                            <li>
-                                <a class="dropdown-item" href="{% url 'user:profile' request.user.id %}">
-                                    <i class="bi bi-person fa-fw me-2"></i>
-                                    Profile o'tish
-                                </a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-info-circle fa-fw me-2"></i>Help</a>
-                            </li>
-                            <li><a class="dropdown-item" href="#"><i class="bi bi-power fa-fw me-2"></i>Sign Out</a>
-                            </li>
-                            <li class="dropdown-divider mb-2"></li>
-                            <li>
-                                <div class="align-items-center text-center py-0">
-                                    <span class="me-3">mode:</span>
-                                    <div class="btn-group theme-icon-active" role="group"
-                                        aria-label="Default button group">
-                                        <button type="button" class="btn btn-light btn-sm mb-0 active"
-                                            data-bs-theme-value="light">
-                                            <svg width="16" height="16" fill="currentColor"
-                                                class="bi bi-brightness-high-fill fa-fw mode-switch"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z">
-                                                </path>
-                                                <use href="#"></use>
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="btn btn-light btn-sm mb-0"
-                                            data-bs-theme-value="dark">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-moon-stars-fill fa-fw mode-switch"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z">
-                                                </path>
-                                                <path
-                                                    d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z">
-                                                </path>
-                                                <use href="#"></use>
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="btn btn-light btn-sm mb-0"
-                                            data-bs-theme-value="auto">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-circle-half fa-fw mode-switch"
-                                                viewBox="0 0 16 16">
-                                                <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z">
-                                                </path>
-                                                <use href="#"></use>
-                                            </svg>
-                                        </button>
-                                    </div>
-                                </div>
-                            </li>
                         </ul>
                     </div>
-                    {% endif %}
 
-                    <div class="nav-item dropdown dropdown-toggle-icon-none nav-search">
-                        <a class="nav-link dropdown-toggle" role="button" href="#" id="navSearch"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <i class="bi bi-search fs-4"> </i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end shadow rounded p-2" aria-labelledby="navSearch">
-                            <form class="input-group" method="post">
-                                {% csrf_token %}
-                                <input class="form-control border-success" required name="query" type="search"
-                                    placeholder="Search" aria-label="Search">
-                                <button class="btn btn-success m-0" type="submit">Search</button>
-                            </form>
+                    <div class="nav flex-nowrap align-items-center">
+                        {% if request.user.is_authenticated %}
+                        <div class="nav-item ms-2 ms-md-3 dropdown">
+                            <a class="avatar avatar-sm p-0" href="#"
+                                id="profileDropdown" role="button"
+                                data-bs-auto-close="outside"
+                                data-bs-display="static"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                {% if request.user.avatar %}
+                                <img class="avatar-img rounded-circle"
+                                    src="{{ request.user.avatar.url }}"
+                                    alt="avatar">
+                                {% else %}
+                                <img class="avatar-img rounded-circle"
+                                    src="data:image/png;base64,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"
+                                    alt="avatar">
+                                {% endif %}
+                            </a>
+
+                            <!-- Profile dropdown START -->
+                            <ul
+                                class="dropdown-menu dropdown-animation dropdown-menu-end shadow pt-3"
+                                aria-labelledby="profileDropdown">
+                                <!-- Profile info -->
+                                <li class="px-3">
+                                    <div class="d-flex align-items-center">
+                                        <!-- Avatar -->
+                                        <div class="avatar me-3">
+                                            {% if request.user.avatar %}
+                                            <img
+                                                class="avatar-img rounded-circle shadow"
+                                                src="{{ request.user.avatar.url }}"
+                                                alt="avatar">
+                                            {% else %}
+                                            <img
+                                                class="avatar-img rounded-circle shadow"
+                                                src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMwAAADACAMAAAB/Pny7AAAAh1BMVEX///8wMzj8/PwAAAAtMDUxMjTy8vIoKzD19fUqLTMiJizu7u74+PgmKS/i4uLm5uYbHyYrLC50dXcmJykhIiXX19eUlZaIiYrMzM17fH2rq6wcHSBbXF60tLUAAArBwcJRU1ajo6M5Oz9JS05naGoACxUSFBg/QkURFh4UHCEKDBA1OjkAAxLN4w3mAAAPEUlEQVR4nO1dC5eiuBI2MSESRHm/5Ckg6p3///tuBXXanlY7EbR7z+E7O7uzMw2kkkq9U5nNJkyYMGHChAkTJkyYMGHChAkTJkz4/cDaeuVHUVQA4D/+aq3hnx7TM1isoqwKQqdJy7rbArq6TBsnDKos8hfiJ/4jZGl+EjhpiTwBbjKdAHSTcW5tPJfWqRMkvvbTo3wM3M+1kYVpjWDgOqE90F/AbyklhJnc3NZpmBkfT/1G4KzpKDN1cho8dTe7dv6BnefaCIm/JDpnqGsy/Gup8WNmMbtfC8IObb7bCoYqYOMD/KjIAqfc7uetxXpiCXU5i/2fHvVnwNTC5GpZPbeIWA6bMULqsFjdnHK8KoIaVs+2CYFFsuZdJkTcr1kePFuuKjpn/Yq4tEuDaPH4iUUUNN3WNIF4Yua0Wi3fM9LvIGbVD1BrA3cxC6Vx4p///M5kX/bIKolTZOliBloU+L9gaTAMbZVsdzAmwg91nKxUngZ66p0rZqHdiid/nCAjS48uTC/3vueurwB+Sy0Oj5vHNFu/YnyyEBwWOQw4n3CrSZ6US37SbFzQQZw5xV3efD3wzAg6DqTobVqsnx4GXhfpTugf3oXr2Y8xW1TaMAjU6okxbE6NjLZCsLEyGm1wKoCxBxw4jHrzcLgSxzicc1C3Jg9OUuXNWNR7IVZ3qZIAu49Vz2toVy/ez2mRvRE6ElV4hJnsn8cJBTuHbtzorbSAyk/AUES63YxqWvmN2IPMS95oEOCZFrhgGZvbwBj3vUawNRFy3XHf+xhGyGBdDmU2Lj8IvVWUGwreUPgeBQpfNGIPePs4Lotd4DdH2Iues36PFDCcDVi7x/gVn4M3rmNQOVRQ82rAx5aNJdbldWxtBDnYnm6jvdgJFS8vPZi4Y7V4HRssqqOOqFu+6v0faHYU6ftq+TpaQHEle0LpJn3VFy6IQe3bdvLqzZkJ0b9zXmsLBELt29XrBU1FxNoEr/xERm1KWPByWsBAChihwAKv+0ZUmyA0wxfu/Q8sQnBAWf0yl2DVwPs3jvGeuJ3mWDBzzUg2+WeAQRa6BPFaUZn99dqUJ8CoPUp4+IqgNMawYRCx/Pc5Gz5YGjoZ2QA8YdXZFOWZKi3rIghjx4nDKlMOE2RzhMxudEbDs0UMUjkP1TwNP6y3RNcZQNfJ/+pQye/CyzCn1HKUA1jfvFbMEkW8VNkwy6Q7eFRH5JzRAFHrHrpKemggZtYlvGCePTHih9A2OkxSJM9kWkJyhq6yMyKmDsI2J4km+RagJvIYsnfrUS0BLMwY4gXysxqVcxvdBJuXvnRgahF4iG7icQM2PmxFLi/zteToUXqTFmA675hI+g9Y6DZK5+OJUDEpqYd0JM2763DDbi/Lmd82obRnlwH5fET7Gc+KHagvR9YdWzkWeURL70iuJKkxYjA7rOL50f8LLbWp3hVSnwcR5LgEfUeNK+0WF52O9HI88ZyIpY4l+cII+TeU9FvHDQ25tcExWLc0GWvXLBoT6VtJ+3VZcf17WgQ11VJupf3OpG4zztLgWbZlyHTkfnbmH6RoQUjnsqEqhyGyVbaj7oxQhJa4lHTEMyO15GgBUV9KSpSVEAHOOCHborYJbyR3f5XL0oLQn0pyBA5Hej2KQMMBzDWoLSlqDPZQwXwC0T1JGQAqm2xGcdaFf8k6yR+uWvmFQagNpHgXzzoTuekY0eBMJ6iVVf5MQipfrQ2X2ggggnJE2QjGsxFasMaSvms0V6EFuFdyI2guIdYIDrRfMmTFkts/lhZlJxykBD4AXszq4XwGZhmdywZ8iBKXidio5IsjEJL7gfJM5Mh21N7KKoS9Gi2I7iS9CqMD/hjMZ+vSBoNdMkyecVViPLldjZewc816WGgD/FaQtbns+gbKxNih7Dhygo7DwpsYg+LQqdyMYGFEKcKVlQCrrY7ygQH7hWMhea8MrGvFlXEbyVcbIM+8gUEnAwxmkVmSQ6q8MkzWIV5WO6rLCqI78HcqIvGFxICKIOTPME2TteBKSL+iUSVGns1m/pagP8MsmuAgH2F6QgBQaQHQ27tWOMRDw6l4gzSnhsqi2ZUTzQBNaJpyiDjDNqU7eYGorDSRJ53nw9UBEe85Mk7QckpdeUb1lc2ZjfyWFjPVDinb8OeUUmlhhmffBf++YCc/lgIRlA8RZ8Wc2vI5UjxrvNsB5nvg0sJMZId19GeI4ZwcqZK7Gs3ViJG2+gB+aqJ2SCo92KnE/vEMH+7kMW6DWAr2iZDNhyFVDuEeLDOVTRcoBTT2KnpjDWbiIVan4S/geS9WMYjWprwIIMRUmSdhaloKe+wfwIbmiv4dVlmaVikUpgEx5pBEDew5K1Syu9edtBvA1JLii94EUBr+FWDaSkGMSpAXgzSXJUY2znSG8JxZrUbCJygTI1KqOylSyE4+3dvjFAZQeuQa+BliQOrIJJuQcn3sYGJ6o1nVV/Ub89v4GTGVC4nFnuGl4kPXaCxixcrRKh+E4GNqiNcoZ8OFNBuUdgY9YynpmRN8Z/eQGLJz1DP7vZ6R9uVuACyAp6ql18HOvV/UYO6DZ97pgDkj7cvdQADEPFWLtyi6453FIW1XPBMyErbZfohtlrTILZ/zIVaBtyfnpbgmZW8Fz0VZB1vNYNLb3ZNBUbwKvblHrwQbpV7uhbdPCUuMZag/o+ZpfkZ/3rnZ5JZliuI5k++PmyZ7PpAvPM35EE9zcaSUPxmsOpVhYb+Km7Qs0yZOhh35FTGA45CQJqY2ObyhvlwCfXRGNjd1G433lKK5HgT+9zfPQeRWeTroHWp+8ysxWDIDo/5Bunys+Ra0tS+6tfR9Woa8x98OFGansN4TidETS2l+FoSw/WH/CwngxGGQ+c/xrKjfA3U7rLzR6HSF/MzHp4EtQIqVW9Pi3DRNBr845xbflk1cPcO2Ij8jnSi+g0Vv3Sm/Q0vSDjHX/mLR6MwVfSlkC04/YDgeHZo5w2DQ6EhxKlcOEj1B7trMOjOps1KTb6stQfnQA1V+C3pXxaDBUZpvvvXNiJWnCqX0p9BCOyxxhmfr3tmU3jTYj/N7Fc2fqQE7zfGl37sMD8hUKt6/BRGfkEyM4t6Psb4Yynex3wm/RorZDLAyD8MrgQrgmVzuDIBWlGqBc31eSro2Y9TOAPzaFFVN36FfFuaqJQHA6WRyTmfsjVLVJHKJhH/HZ6Js1uHKmfP+SLaEIDBglsaoN+v9iO88PCzOvkuFy76AunXxmBrc54mIPsYxGmHh2duHXwNasq1qqcmFGGpus8dHUPCsY2Axj1GjiQOL0EcunhBHifsEi12gm98Ux4sDL9YY1bNYON+PKynwrDpK6Ja7IGT+uMJZ1O+OdPx0KQ59PKg4B1oU60y/QlBzd+Z9b7yK81kGdhF7EEtUrZm9Sc0DJRLboLdHOgsw0xoTkfsRJ9+zB/BYD4LI5u77o85GrBntIG2iE2TfOz+zKp+UY59hl3fOOuGYIULHO36+AGvT7m4zgha7Y9AC+uZOuqE/2ZSOePAUfNbb1Y14lqjWMt8DQTdiWlh4ZaOYZVeApbl9GjCqlSuZ7sH8Kn1x309BJJnHjN3dO6dpxMq1P/dxq+TAT11QQ6MedcczZy+OsHzh3OKrm/88dP7lwOGyshRODMgSo3Ed0d2/fs2q8cajBTTjl7WPREsAa+T+BliUnlL3H8cVZ8ehGuYz8n86GaxL2JH70U+dzxbOAaGjiAZ8fE8ECEaF+7ncfxHCDHrxyP0ABFYgt+jxepZwpnBaTgp0/mlpkiP5l76RgDPCKLluCaCl4+jLK/D0an9EHtgx9CU9NC7dTT4mKlIqLpMCaS+ThWfr2kMv6m4yu/Sdaf4qA2czPjEfmX7D2VD6Vb6Nhqh2KeGXDbmcD/HI7lEzP8/VQth87us6AoEhZoNrwS4pn0CxvFSKluAcFAxcisgLezWJpqagxIh7dnJxNZc8lC1PS3XullGJEJwVvLKTEp6FwMiXnC2eFXRMeUZdu7hMk+hKvRtSXCJDzKzZnDvP9WEZYQeORQtxy7MoW1ai2PvwfHWpHDF4hhvRd3JfaadM/yomA4JMV6CMxuecjVbtCWi05g3dmzWxNqS9tO3Uqlrx2OxtbOqq1yiizemOiIq0N9zpAMosBmrQ8W/pVhTvBi8Oa+PonN1Yx3sq9M2bmoSvY8+mZN9cdIBR3a3HkgKl+666qOKo2Ylwevy2hudGKK6R8MpLjBj7gTfA49x44d+ymqwWAobLn6YaCjxbBK7o3rv9+80FTCiXTpl9At81fdd6QY4R/I8hanPFKuGhSDY2cHYfmj9N6jIqc1eVGkrdeV30LVvEL78R7d/NzQt7NN6Gbwt96W6uKh6i9I+lq5BDvHnfof1sJ1ceF06y/hN3haRc3JKT19GHPljFW8Z0YX9+SxPRGdvGJ5u4X5mobgmltpsufuQWl2ArkmU8D42Pj2tJU1PX/KaXhs45qpurOg1shEfRoNfdvrSp6T2I2YsaJuLMe5RcF176SZx2zOK3CSKMW6xL40ow00UarrJOtDU2bSHuf6JW7yR9amFFsX3Zk3PZyLN1UYVNiUzLsjyX2T1cj8P/mkiUAhUXLSKmBK+SdN/f2FC/s7f5V+AodkWEhvO0+lyCiddRkfQVWmVdd11/mVYciouCPtedYb9qPPEKi8Xv7aF/A0aWtjoCB9Qsw+I8zI+upgtj7Z+K58RlR8bi8ueXUWtFWDKxuKRNsx9dlhPwOtvmp6t0uqaSFas9ObAonSV2HfuDfvbClhPEIuB1ZffGmW4SoEcyBLFKmo4KswhWhVTrF7bmVoVRsZyBD4pAe5hd+PdWnY/a2U/KY1EEtavrOjyA2NyrfgGDfUDIpKz0bNLHBHRrPqdO4t+6CBBrILnteb7RL3J67KsSBuO04/2wJqcbssBYPPyZt3bZhFVW9Ps/KrIqiEvS5q2l9xfTEZOhLvQHVzy/CloWlx3z3FNqkOgmP7Rtnovb5/K8bfcWO4VzwGzhQnMOOBrwFqyLwEk7fs8AOLGWJ+6mK36B/HqInmEW/skAsA4Hi3MGGx3EAvzDhQngoZ73ztdQ/k4G+xfLlV+cLtTs79NE4j7N03Wahf9b7puTxdlDAQNg5fcmgPj3an0xAf4bCzJhwoQJEyZMmDBhwoQJEyZMmDBBCf8HkNT7sZvoa38AAAAASUVORK5CYII="
+                                                alt="avatar">
+                                            {% endif %}
+                                        </div>
+                                        <div>
+                                            <a class="h6 mt-2 mt-sm-0"
+                                                href="#">{{
+                                                request.user.full_name }}</a>
+                                            <p class="small m-0">+998{{
+                                                request.user.phone }}</p>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                </li>
+                                <!-- Links -->
+                                <li><a class="dropdown-item"
+                                        href="{% url 'user:profile' request.user.id %}"><i
+                                            class="bi bi-person fa-fw me-2"></i>Profilega
+                                        O'tish</a></li>
+                                <li><a class="dropdown-item" href="#"><i
+                                            class="bi bi-info-circle fa-fw me-2"></i>Yordam</a></li>
+                                <li><a class="dropdown-item"
+                                        href="{% url 'blog:user_logout' %}"><i
+                                            class="bi bi-power fa-fw me-2"></i>Chiqish</a></li>
+                                <li class="dropdown-divider mb-2"></li>
+                                <li>
+                                    <div
+                                        class="align-items-center text-center py-0">
+                                        <span class="me-3">mode:</span>
+                                        <div class="btn-group theme-icon-active"
+                                            role="group"
+                                            aria-label="Default button group">
+                                            <button type="button"
+                                                class="btn btn-light btn-sm mb-0 active"
+                                                data-bs-theme-value="light">
+                                                <svg width="16" height="16"
+                                                    fill="currentColor"
+                                                    class="bi bi-brightness-high-fill fa-fw mode-switch"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12 8a4 4 0 1 1-8 0 4 4 0 0 1 8 0zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"></path>
+                                                    <use href="#"></use>
+                                                </svg>
+                                            </button>
+                                            <button type="button"
+                                                class="btn btn-light btn-sm mb-0"
+                                                data-bs-theme-value="dark">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16" height="16"
+                                                    fill="currentColor"
+                                                    class="bi bi-moon-stars-fill fa-fw mode-switch"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"></path>
+                                                    <path
+                                                        d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"></path>
+                                                    <use href="#"></use>
+                                                </svg>
+                                            </button>
+                                            <button type="button"
+                                                class="btn btn-light btn-sm mb-0"
+                                                data-bs-theme-value="auto">
+                                                <svg
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                    width="16" height="16"
+                                                    fill="currentColor"
+                                                    class="bi bi-circle-half fa-fw mode-switch"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"></path>
+                                                    <use href="#"></use>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <!-- Profile dropdown END -->
+                        </div>
+                        {% endif %}
+
+                        <div
+                            class="nav-item dropdown dropdown-toggle-icon-none nav-search">
+                            <a class="nav-link dropdown-toggle" role="button"
+                                href="#" id="navSearch"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-search fs-4"> </i>
+                            </a>
+                            <div
+                                class="dropdown-menu dropdown-menu-end shadow rounded p-2"
+                                aria-labelledby="navSearch">
+                                <form class="input-group" method="post">
+                                    {% csrf_token %}
+                                    <input class="form-control border-success"
+                                        required name="query" type="search"
+                                        placeholder="Search"
+                                        aria-label="Search">
+                                    <button class="btn btn-success m-0"
+                                        type="submit">Search</button>
+                                </form>
+                            </div>
                         </div>
                     </div>
-
+                    <!-- Nav right END -->
                 </div>
-            </div>
-        </nav>
+            </nav>
+            <!-- Logo Nav END -->
+        </header>
+        <!-- =======================
+Header END -->
+        <main>
+            {% block content %}
+            {% endblock %}
+        </main>
 
-    </header>
+        <!-- =======================
+Footer START -->
+        <footer class="bg-dark">
 
-
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
-
-
-    <footer class="bg-dark">
-        <!-- Footer copyright START -->
-        <div class="bg-dark-overlay-3">
-            <div class="container">
-                <div class="row align-items-center justify-content-center py-4">
-                    <div class="text-center text-primary-hover text-body-secondary">©2023 <a href="/"
-                            class="text-reset btn-link" target="_blank">Blogzine</a>.
-                        All rights reserved
+            <!-- Footer copyright START -->
+            <div class="bg-dark-overlay-3">
+                <div class="container">
+                    <div
+                        class="row align-items-center justify-content-md-center py-4">
+                        <div
+                            class="text-center text-primary-hover text-body-secondary">©2023
+                            <a href="/" class="text-reset btn-link"
+                                target="_blank">Blogzine</a>. All rights
+                            reserved
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <!-- Footer copyright END -->
-    </footer>
+            <!-- Footer copyright END -->
+        </footer>
+        <!-- =======================
+Footer END -->
 
-    <div class="back-top"><i class="bi bi-arrow-up-short"></i></div>
+        <!-- Back to top -->
+        <div class="back-top"><i class="bi bi-arrow-up-short"></i></div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
-    <script src="https://kit.fontawesome.com/60381fb95b.js" crossorigin="anonymous"></script>
-    <!-- Vendors -->
-    <script src="{% static 'assets/vendor/tiny-slider/tiny-slider.js' %}"></script>
-    <script src="{% static 'assets/vendor/sticky-js/sticky.min.js' %}"></script>
-    <script src="{% static 'assets/vendor/plyr/plyr.js' %}"></script>
-    <script src="https://kit.fontawesome.com/60381fb95b.js" crossorigin="anonymous"></script>
-    <script src="{% static 'assets/js/functions.js' %}"></script>
-</body>
+        <!-- =======================
+JS libraries, plugins and custom scripts -->
 
+        <script
+            src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+        <script
+            src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Vendors -->
+        <script
+            src="{% static 'assets/vendor/tiny-slider/tiny-slider.js' %}"></script>
+        <script
+            src="{% static 'assets/vendor/sticky-js/sticky.min.js' %}"></script>
+        <script src="{% static 'assets/vendor/plyr/plyr.js' %}"></script>
+        <script src="https://kit.fontawesome.com/60381fb95b.js"
+            crossorigin="anonymous"></script>
+
+        <!-- Template Functions -->
+        <script src="{% static 'assets/js/functions.js' %}"></script>
+    </body>
 </html>
